@@ -32,7 +32,7 @@ setup_flatcar() {
     # -o OEM      OEM type to install (e.g. ami), using flatcar_production_<OEM>_image.bin.bz2
     # -i IGNITION Insert an Ignition config to be executed on boot.
     echo -e "\n=====> Install Flatcar to ${TARGET_DEVICE}"
-    sudo ./flatcar-install -d ${TARGET_DEVICE} -C stable -B arm64-usr -o '' -i config.json
+    sudo ./flatcar-install -d ${TARGET_DEVICE} -C stable -B arm64-usr -o '' -i config-template.json
 }
 
 setup_uefi_firmware() {
