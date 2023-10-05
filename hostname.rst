@@ -3,7 +3,7 @@ Hostname
 
 .. code-block:: bash
 
-  # reboot is not required to apply the change
+  # reboot is NOT required to apply the change
   hostnamectl
   # to network
   hostnamectl set-hostname <new-hostname>
