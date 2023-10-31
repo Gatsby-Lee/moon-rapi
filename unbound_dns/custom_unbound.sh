@@ -98,9 +98,11 @@ server:
     # Do not print log lines that say why queries return SERVFAIL to clients
     log-servfail: no
 
-    # If you want to log to a file, use:
+    # Set log location
+    # - If you want to log to a file, use:
     # logfile: /opt/unbound/etc/unbound/unbound.log
-    # Set log location (using /dev/null further limits logging)
+    # - To further limit logging, using /dev/null
+    # - To see logs by taling container, use /dev/stdout or /dev/stderr
     logfile: /dev/null
 
     # Set logging level
@@ -347,8 +349,6 @@ server:
     ###########################################################################
     # Extra Server Options
     ###########################################################################
-
-    # === Section: Server Options
 
     # private domains
     private-domain: wowbro.party
