@@ -227,8 +227,8 @@ server:
     private-address: 172.16.0.0/12
     private-address: 192.168.0.0/16
     private-address: 169.254.0.0/16
-    # private-address: fd00::/8
-    # private-address: fe80::/10
+    private-address: fd00::/8
+    private-address: fe80::/10
     # private-address: ::ffff:0:0/96
 
     # Enable ratelimiting of queries (per second) sent to nameserver for
@@ -253,7 +253,10 @@ server:
     # servers and checks if the reply still has the correct casing.
     # This feature is an experimental implementation of draft dns-0x20.
     # Experimental option.
-    use-caps-for-id: yes
+    ## mlee: override: ref: https://docs.pi-hole.net/guides/dns/unbound/
+    # Don't use Capitalization randomization as it known to cause DNSSEC issues sometimes
+    # see https://discourse.pi-hole.net/t/unbound-stubby-or-dnscrypt-proxy/9378 for further details
+    use-caps-for-id: no
 
     # Help protect users that rely on this validator for authentication from
     # potentially bad data in the additional section. Instruct the validator to
@@ -353,6 +356,10 @@ server:
     # private domains
     private-domain: wowbro.party
 
+    # pi-hole has
+    # ref: https://unbound.docs.nlnetlabs.nl/en/latest/manpages/unbound.conf.html?highlight=%22so-rcvbuf%22
+    # ref: https://docs.pi-hole.net/guides/dns/unbound/
+    # so-rcvbuf: 1m
 
 remote-control:
     control-enable: no
