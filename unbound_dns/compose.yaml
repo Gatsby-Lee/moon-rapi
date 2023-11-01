@@ -4,8 +4,8 @@ services:
     image: "wowbro/unbound-dns-rpi:1.17.1"
     restart: unless-stopped
     ports:
-      - "5335:53/tcp"
-      - "5335:53/udp"
+      - "127.0.0.1:5335:53/tcp"
+      - "127.0.0.1:5335:53/udp"
     volumes:
       # - ./custom_unbound.sh:/unbound.sh:ro
       - ${PWD}/custom_unbound.sh:/unbound.sh:ro
