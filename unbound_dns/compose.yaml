@@ -9,3 +9,4 @@ services:
     volumes:
       # - ./custom_unbound.sh:/unbound.sh:ro
       - ${PWD}/custom_unbound.sh:/unbound.sh:ro
+      - ${PWD}/root.hints:/opt/unbound/etc/unbound/var/root.hints:ro

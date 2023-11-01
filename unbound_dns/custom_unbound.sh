@@ -101,8 +101,9 @@ server:
     # Set log location
     # - If you want to log to a file, use:
     # logfile: /opt/unbound/etc/unbound/unbound.log
+    # - If "" is given, logging goes to stderr, or nowhere once daemonized.
+    # logfile: ""
     # - To further limit logging, using /dev/null
-    # - To see logs by taling container, use /dev/stdout or /dev/stderr
     logfile: /dev/null
 
     # Set logging level
@@ -360,6 +361,11 @@ server:
     # ref: https://unbound.docs.nlnetlabs.nl/en/latest/manpages/unbound.conf.html?highlight=%22so-rcvbuf%22
     # ref: https://docs.pi-hole.net/guides/dns/unbound/
     # so-rcvbuf: 1m
+
+    # ref: https://unbound.docs.nlnetlabs.nl/en/latest/manpages/unbound.conf.html?highlight=%22so-rcvbuf%22#unbound-conf-use-syslog
+    # ref: https://docs.pi-hole.net/guides/dns/unbound/
+    # wget https://www.internic.net/domain/named.root -qO- | sudo tee /var/lib/unbound/root.hints
+    root-hints: var/root.hints
 
 remote-control:
     control-enable: no
