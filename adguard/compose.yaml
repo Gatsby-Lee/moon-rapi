@@ -5,21 +5,17 @@ services:
     container_name: adguard
     hostname: "adguard"
     restart: unless-stopped
-    ports:
-      - 80:80/tcp
-      - 443:443/tcp
-      - 443:443/udp
-      - 3000:3000/tcp
-      - 53:53/tcp
-      - 53:53/udp
+    # to reach unbound ( 127.0.0.1:5335 ), using host network_mode
+    network_mode: host
+    # if network_mode is host, then port-mapping is ignored.
+    # ports:
+    #  - 80:80/tcp
+    #  - 443:443/tcp
+    #  - 443:443/udp
+    #  - 3000:3000/tcp
+    #  - 53:53/tcp
+    #  - 53:53/udp
 
     volumes:
       - /mnt/dockers/adguard/work:/opt/adguardhome/work
       - /mnt/dockers/adguard/conf:/opt/adguardhome/conf
-
-networks:
-  # docker network create --driver bridge wowbro-dns-net
-  # ref: https://docs.docker.com/compose/networking/
-  default:
-    name: wowbro-dns-net
-    external: true
