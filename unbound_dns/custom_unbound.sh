@@ -363,6 +363,16 @@ server:
     # ref: https://docs.pi-hole.net/guides/dns/unbound/
     # so-rcvbuf: 1m
 
+    # Queries to Answer
+    do-ip4: yes
+    do-udp: yes
+    do-tcp: yes
+    # May be set to yes if you have IPv6 connectivity
+    do-ip6: no
+    # You want to leave this to no unless you have *native* IPv6. With 6to4 and
+    # Terredo tunnels your web browser should favor IPv4 for the same reasons
+    prefer-ip6: no
+
     # ref: https://unbound.docs.nlnetlabs.nl/en/latest/manpages/unbound.conf.html?highlight=%22so-rcvbuf%22#unbound-conf-use-syslog
     # ref: https://docs.pi-hole.net/guides/dns/unbound/
     # curl -o root.hints https://www.internic.net/domain/named.root
