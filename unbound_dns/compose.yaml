@@ -1,7 +1,9 @@
 version: '3'
 services:
-  unbound-dns:
+  unbound:
     image: "wowbro/unbound-dns-rpi:1.17.1"
+    container_name: unbound
+    hostname: "unbound"
     restart: unless-stopped
     ports:
       - "5335:53/tcp"
