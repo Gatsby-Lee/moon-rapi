@@ -73,7 +73,8 @@ server:
 
     # Listen to for queries from clients and answer from this network interface
     # and port.
-    interface: 0.0.0.0@53
+    # interface: 0.0.0.0@53
+    interface: 127.0.0.1@53
 
     # Rotates RRSet order in response (the pseudo-random number is taken from
     # the query ID, for speed and thread safety).
@@ -364,7 +365,7 @@ server:
 
     # ref: https://unbound.docs.nlnetlabs.nl/en/latest/manpages/unbound.conf.html?highlight=%22so-rcvbuf%22#unbound-conf-use-syslog
     # ref: https://docs.pi-hole.net/guides/dns/unbound/
-    # wget https://www.internic.net/domain/named.root -qO- | sudo tee /var/lib/unbound/root.hints
+    # curl -o root.hints https://www.internic.net/domain/named.root
     root-hints: var/root.hints
 
 remote-control:
