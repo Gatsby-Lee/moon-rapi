@@ -1,15 +1,15 @@
 Unbound DNS
 ===========
 
-* Based on `MatthewVance/unbound-docker-rpi <https://github.com/MatthewVance/unbound-docker-rpi>`
+* Based on `MatthewVance/unbound-docker-rpi <https://github.com/MatthewVance/unbound-docker-rpi>`_
 
-* Built own `Docker Image - ARM / ARM64 <https://hub.docker.com/r/wowbro/unbound-dns-rpi/tags>`
+* Built own `Docker Image - ARM / ARM64 <https://hub.docker.com/r/wowbro/unbound-dns-rpi/tags>`_
 
 * Expose 127.0.0.1:53
 
 * Iterative DNS
 
-  * Download root.hints "curl -o root.hints https://www.internic.net/domain/named.root"
+  * Download root.hints ``curl -o root.hints https://www.internic.net/domain/named.root``
 
 .. code-block:: bash
 
@@ -20,3 +20,6 @@ Unbound DNS
   --restart=unless-stopped \
   --detach=true \
   wowbro/unbound-dns-rpi:1.17.1
+
+  # OR
+  docker-compose up -d
