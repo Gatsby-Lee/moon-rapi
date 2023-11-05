@@ -1,0 +1,3 @@
+# ignore everything ( files and folders ) that starts with `.`
+.*
+!.gitignore
