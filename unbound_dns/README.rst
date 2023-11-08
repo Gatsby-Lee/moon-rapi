@@ -1,6 +1,11 @@
 Unbound DNS
 ===========
 
+.. image:: https://img.shields.io/docker/pulls/wowbro/unbound-dns-rpi
+  :alt: Docker Pulls
+  :target: https://hub.docker.com/repository/docker/wowbro/unbound-dns-rpi/general
+
+
 * Based on `MatthewVance/unbound-docker-rpi <https://github.com/MatthewVance/unbound-docker-rpi>`_
 
 * Built own `Docker Image - ARM / ARM64 <https://hub.docker.com/r/wowbro/unbound-dns-rpi/tags>`_
