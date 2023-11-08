@@ -2,12 +2,18 @@
 version: '3'
 services:
   tailscale:
+    # https://hub.docker.com/r/tailscale/tailscale
     image: "tailscale/tailscale:latest"
     container_name: tailscale
     hostname: "tailscale"
     restart: unless-stopped
     network_mode: host
-
+    cap_drop:
+      - NET_ADMIN
+      - NET_RAW
+    environment:
+      - TS_STATE_DIR=/var/lib/tailscale
     volumes:
-      - /mnt/dockers/adguard/work:/opt/adguardhome/work
-      - /mnt/dockers/adguard/conf:/opt/adguardhome/conf
+      - /var/lib:/var/lib
+      - /dev/net/tun:/dev/net/tun
+      - ${PWD}/.tailscale:/var/lib/tailscale
