@@ -1,0 +1,13 @@
+# https://docs.docker.com/compose/compose-file/compose-file-v3/
+version: '3'
+services:
+  tailscale:
+    image: "tailscale/tailscale:latest"
+    container_name: tailscale
+    hostname: "tailscale"
+    restart: unless-stopped
+    network_mode: host
+
+    volumes:
+      - /mnt/dockers/adguard/work:/opt/adguardhome/work
+      - /mnt/dockers/adguard/conf:/opt/adguardhome/conf
