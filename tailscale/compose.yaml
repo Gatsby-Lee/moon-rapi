@@ -1,18 +1,21 @@
 # https://docs.docker.com/compose/compose-file/compose-file-v3/
 version: '3'
 services:
-  tailscale:
+  tailscaled:
     # https://hub.docker.com/r/tailscale/tailscale
     image: "tailscale/tailscale:latest"
-    container_name: tailscale
+    container_name: tailscaled
     hostname: "tailscale"
     restart: unless-stopped
     network_mode: host
-    cap_drop:
+    cap_add:
       - NET_ADMIN
       - NET_RAW
     environment:
+      # Directory where the state of tailscaled is stored.
+      # This needs to persist across container restarts
       - TS_STATE_DIR=/var/lib/tailscale
+      - TS_AUTHKEY=${TS_AUTHKEY}
     volumes:
       - /var/lib:/var/lib
       - /dev/net/tun:/dev/net/tun
