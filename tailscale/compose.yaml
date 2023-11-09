@@ -4,6 +4,7 @@ services:
   tailscaled:
     # https://hub.docker.com/r/tailscale/tailscale
     image: "tailscale/tailscale:latest"
+    container_name: tailscaled
     # `hostname` will show up as a machine name in TS.
     hostname: ${MACHINE_NAME_IN_TS}
     restart: unless-stopped
