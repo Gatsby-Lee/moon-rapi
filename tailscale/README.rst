@@ -18,3 +18,10 @@ Check Service Status
 .. code-block:: bash
 
   docker exec tailscaled tailscale --socket /tmp/tailscaled.sock status
+
+Create / Renew Cert
+-------------------
+
+.. code-block:: bash
+
+  docker exec tailscaled tailscale --socket /tmp/tailscaled.sock cert <ts-domain-name>
