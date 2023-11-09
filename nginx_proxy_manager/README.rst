@@ -4,12 +4,14 @@ Nginx Proxy Manager
 Note
 ----
 
-Using folder name with `.` to hide and prevent to push to GitHub accidently.
+* default login ( admin@example.com | changeme )
+* Using folder name with `.` to hide and prevent to push to GitHub accidently.
 
 .. code-block:: bash
 
   .data
   .letsencrypt
+
 
 
 Tutorials / References
