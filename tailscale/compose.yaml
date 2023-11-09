@@ -16,6 +16,8 @@ services:
       # This needs to persist across container restarts
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_AUTHKEY=${TS_AUTHKEY}
+      # By default false, for DNS machine, it should be false.
+      - TS_ACCEPT_DNS=${TS_ACCEPT_DNS}
     volumes:
       - /var/lib:/var/lib
       - /dev/net/tun:/dev/net/tun
