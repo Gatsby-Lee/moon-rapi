@@ -10,7 +10,7 @@ Setup
   cp .env .env.local
   # 2. update value
   # 3. bring up with docker-compose
-  docker-compose --env-file .env_local up -d
+  docker-compose --env-file .env.local up -d
 
 Check Service Status
 --------------------
