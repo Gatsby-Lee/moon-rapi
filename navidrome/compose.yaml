@@ -1,0 +1,21 @@
+# ref: https://www.navidrome.org/docs/installation/docker/
+version: "3"
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    hostname: navidrome
+    user: ${UID}:${GID}
+    ports:
+      - "4533:4533"
+    restart: unless-stopped
+    environment:
+      # Optional: put your config options customization here.
+      # ref: https://www.navidrome.org/docs/usage/configuration-options/#available-options
+      # ND_SCANSCHEDULE: 1h
+      # ND_LOGLEVEL: info
+      # ND_SESSIONTIMEOUT: 24h
+      # ND_BASEURL: ""
+    volumes:
+      - "${PATH_DATA}:/data"
+      - "${PATH_MUSIC}:/music:ro"
