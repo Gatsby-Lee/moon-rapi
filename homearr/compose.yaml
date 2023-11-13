@@ -1,3 +1,4 @@
+# ref: https://homarr.dev/docs/introduction/installation#installation-using-docker-compose-or-portainer-stacks
 version: '3'
 services:
   homarr:
@@ -8,7 +9,7 @@ services:
     ports:
       - "7575:7575"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
       - /mnt/dockers/homarr/configs:/app/data/configs \
       - /mnt/dockers/homarr/data:/data \
       - /mnt/dockers/homarr/icons:/app/public/icons \
