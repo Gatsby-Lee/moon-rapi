@@ -19,3 +19,9 @@ On MacOS, if SSH fails due to the DNS resolution
 
   chmod 700 ~/.ssh
   chmod 600 ~/.ssh/authorized_keys
+
+.ssh/config OR .ssh_config
+-------------------------
+
+https://goteleport.com/blog/ssh-config/
+
