@@ -12,6 +12,8 @@ Bring up on Docker
   # 2. update value
   # 3. bring up with docker-compose
   docker-compose --env-file .env.local up -d
+  # OR
+  docker compose --env-file .env.local up -d
 
   ## Check Service Status
   docker exec tailscaled tailscale --socket /tmp/tailscaled.sock status

@@ -37,8 +37,8 @@ Build Image for ARM and ARM64
   git clone https://github.com/Gatsby-Lee/unbound-docker-rpi
   cd unbound-docker-rpi/1.17.1
 
-  docker buildx build \                                                 
-    --tag wowbro/unbound-dns-rpi:1.17.1 \    
+  docker buildx build \
+    --tag wowbro/unbound-dns-rpi:1.17.1 \
     --platform linux/arm/v7,linux/arm64/v8 \
     --builder container \
     --push .
