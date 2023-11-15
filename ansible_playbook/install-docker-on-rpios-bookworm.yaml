@@ -3,25 +3,27 @@
   - name: Install Docker Engine on Raspberry Pi OS - Bookworm
     hosts: all
     become: True
+    vars:
+      current_user: "{{ lookup('env', 'USER') }}"
     tasks:
 
     # Install aptitude, which is preferred by Ansible as an alternative to the apt package manager.
     - name: Install aptitude
       apt:
-        name: aptitude
         state: latest
         update_cache: true
+        name: aptitude
 
     - name: Install required packages
       apt:
+        state: latest
+        update_cache: true
         name:
           - ca-certificates
           - curl
           - gnupg2
           - apt-transport-https
           - software-properties-common
-        state: latest
-        update_cache: true
 
     ## Add Docker Repo
     # @note apt_key is deprecated in Debian/Ubuntu
@@ -51,9 +53,21 @@
 
     - name: Install Docker Packages
       apt:
+        state: latest
+        update_cache: true
         name:
           - docker-ce
           - docker-ce-cli
           - containerd.io
           - docker-buildx-plugin
           - docker-compose-plugin
+
+    - name: Add currnt user to Docker group
+      user:
+        name: "{{ current_user }}"
+        groups: docker
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
