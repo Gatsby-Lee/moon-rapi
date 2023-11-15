@@ -1,0 +1,13 @@
+---
+  - name: Install Docker Engine on Raspberry Pi OS - Bookworm
+    host: all
+    task:
+
+    - name: Install required packages
+      apt:
+        name:
+          - ca-certificates
+          - curl
+          - gnupg2
+
+    - debug: var=output.stdout_lines
