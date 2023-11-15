@@ -15,7 +15,7 @@ On MacOS, if SSH fails due to the DNS resolution
 .ssh permission
 ---------------
 
-..code-block:: bavsh
+.. code-block:: bavsh
 
   chmod 700 ~/.ssh
   chmod 600 ~/.ssh/authorized_keys
