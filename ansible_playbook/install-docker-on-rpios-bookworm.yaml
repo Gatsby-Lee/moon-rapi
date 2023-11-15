@@ -1,7 +1,8 @@
 ---
   - name: Install Docker Engine on Raspberry Pi OS - Bookworm
-    host: all
-    task:
+    hosts: all
+    become: True
+    tasks:
 
     - name: Install required packages
       apt:
@@ -10,4 +11,21 @@
           - curl
           - gnupg2
 
-    - debug: var=output.stdout_lines
+    # /etc/apt/sources.list.d/download_docker_com_linux_debian.list
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+
+    # https://docs.docker.com/engine/install/debian/
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=arm64] https://download.docker.com/linux/debian bookworm stable
+        state: present
+
+    - name: Install Docker Engine
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
