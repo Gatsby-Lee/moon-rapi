@@ -7,9 +7,9 @@ services:
     hostname: "homarr"
     restart: unless-stopped
     ports:
-      - "7575:7575"
+      - 7575:7575
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
-      - /mnt/dockers/homarr/configs:/app/data/configs \
-      - /mnt/dockers/homarr/data:/data \
-      - /mnt/dockers/homarr/icons:/app/public/icons \
+      - ${PATH_CONFIGS}:/app/data/configs \
+      - ${PATH_DATA}:/data \
+      - ${PATH_ICONS}:/app/public/icons \
