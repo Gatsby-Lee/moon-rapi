@@ -2,6 +2,8 @@
 version: "3"
 services:
   navidrome:
+    # https://github.com/navidrome/navidrome/releases
+    # https://hub.docker.com/r/deluan/navidrome
     image: deluan/navidrome:latest
     container_name: navidrome
     hostname: navidrome
