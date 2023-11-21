@@ -9,6 +9,7 @@ services:
     volumes:
       - ${PATH_CONFIG}:/config
       - ${PATH_CACHE}:/cache
+      - ${PATH_MEDIA}:/media
     restart: 'unless-stopped'
     # Optional - alternative address used for autodiscovery
     # environment:
