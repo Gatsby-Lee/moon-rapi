@@ -14,6 +14,7 @@ services:
     # Optional - alternative address used for autodiscovery
     # environment:
     #   - JELLYFIN_PublishedServerUrl=http://example.com
-    # Optional - may be necessary for docker healthcheck to pass if running in host network mode
+    ## Optional - may be necessary for docker healthcheck to pass if running in host network mode
+    # @note: 2023-11-20: well it doesn't look necessary when using network_mode=host
     # extra_hosts:
     #   - "host.docker.internal:host-gateway"
