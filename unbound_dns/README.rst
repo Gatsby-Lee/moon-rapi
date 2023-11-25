@@ -28,6 +28,7 @@ Unbound DNS
 
   # OR
   docker-compose up -d
+  docker compose up -d
 
 Build Image for ARM and ARM64
 -----------------------------
