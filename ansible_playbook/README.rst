@@ -33,3 +33,11 @@ Other ways to run playbook locally
 
     - hosts: 127.0.0.1
       connection: local
+
+
+Install Ansible in Raspberry Pi
+-------------------------------
+
+.. code-block:: bash
+
+    sudo apt install ansible
