@@ -1,0 +1,46 @@
+# ==
+# ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html
+## Types:
+#   - List
+#   - Dict
+#   - Bool
+## Possible to manipulate variable values ( e.g. lower )
+## Possible to set facts as use fact in condition
+# ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_conditionals.html
+# - pre-existing Facts
+#
+## Fact vs. Var?
+# ==
+---
+- name: Experiment Variable
+  hosts: all
+  # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
+  # ref: https://docs.ansible.com/ansible/latest/plugins/become.html#become-plugins
+  # become: true
+  # become_user: root
+  tasks:
+
+  - name: Show ansible_facts
+    ansible.builtin.debug:
+      # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_conditionals.html
+      # ansible_facts is a dict ( nested ) which has a comprehensive info.
+      msg: "{{ ansible_facts }}"
+
+  # @note: `include_vars` looks for main.yaml in ./vars
+  - include_vars: main.yaml
+  - name: Refer pre-defined var in vars.main
+    ansible.builtin.debug:
+      msg: "{{ my_os_arch_arm_centric }}"
+
+  - name: Show ansible_facts - access nested key and value
+    ansible.builtin.debug:
+      # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_conditionals.html
+      # `ansible_facts` is a dict ( nested ) which has a comprehensive info.
+      # The nested key can be accessed either dot('.') or index([0] or ['key'])
+      msg: "{{ ansible_facts.os_family }} |  {{ ansible_facts['os_family'] }}"
+
+  - name: Show Variable Values
+    ansible.builtin.debug:
+      # on macOS ( Intel ): "22.6.0 | macosx | Darwin | x86_64"
+      # on Raspberry Pi - Bookworm ( aarch64 ): "bookworm | debian | Debian | aarch64"
+      msg: "{{ ansible_distribution_release }} | {{ ansible_distribution | lower }} | {{ ansible_os_family }} | {{ ansible_architecture }}"

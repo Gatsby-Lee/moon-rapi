@@ -1,0 +1,7 @@
+## Define a mapping which can return "arm64"
+# Use Cases:
+# @TODO: monitor if this is only for Docker repo. If so, then this var should be moved to role:fn_docker
+# - In role:fn_docker, Docker in Debian OS uses `arm64` over `aarch64` as architecture.
+my_os_arch_arm_centric_map:
+  aarch64: arm64
+my_os_arch_arm_centric: "{{ ansible_architecture if ansible_architecture not in my_os_arch_arm_centric_map }}"
