@@ -25,6 +25,8 @@
   - name: Setup Docker
     include_role:
       name: fn_docker
+      # ref: https://stackoverflow.com/questions/73724567/how-to-have-multiple-tasks-under-one-role-in-ansible
+      tasks_from: main # Intentionally defined to remember later - it can be used to include different tasks file in the role.
     vars:
       # ansible_user is special-variable
       # ref: https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html#special-variables

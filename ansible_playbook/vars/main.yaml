@@ -5,3 +5,10 @@
 my_os_arch_arm_centric_map:
   aarch64: arm64
 my_os_arch_arm_centric: "{{ ansible_architecture if ansible_architecture not in my_os_arch_arm_centric_map }}"
+
+## Define a mapping which can return "linux"
+# @note: intend to return the CamelCase to match to the current ansible_os_family.
+# ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_conditionals.html#ansible-facts-os-family
+my_os_family_linux_centric_map:
+  Debian: Linux
+my_os_family_linux_centric: "{{ ansible_os_family if ansible_os_family not in my_os_family_linux_centric_map }}"

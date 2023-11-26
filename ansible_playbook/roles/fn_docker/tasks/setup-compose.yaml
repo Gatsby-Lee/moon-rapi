@@ -1,0 +1,33 @@
+# --
+# Function based Role
+# ref: https://docs.ansible.com/ansible/latest/tips_tricks/sample_setup.html#sample-task-and-handler-files-in-a-function-based-role
+#
+# Role: Setup Docker-Compose
+# ref: https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-debian-10
+# ref: https://dev.to/abbazs/how-to-install-the-latest-docker-and-docker-compose-on-debian-based-linux-systems-3o9j
+# --
+## Steps
+# 1. Download docker-compose from github
+# 2. Grant execution permission to the docker-compose
+# --
+
+- name: Print a message
+  ansible.builtin.debug:
+    msg: ">>>>>>>>>> START: setting up docker-compose"
+
+# ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html
+- name: "Download docker-compose to {{ fn_docker__path_docker_compose }} "
+  ansible.builtin.get_url:
+    # ref: https://github.com/docker/compose/releases
+    # RPi 64: https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-aarch64
+    url: "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-{{ my_os_family_linux_centric }}-{{ ansible_architecture }}"
+    dest: "{{ fn_docker__path_docker_compose }}"
+
+- name: Grant executions permission
+  ansible.builtin.file:
+    path: "{{ fn_docker__path_docker_compose }}"
+    mode: "0755"
+
+- name: Print a message
+  ansible.builtin.debug:
+    msg: "<<<<<<<<<< END: setting up docker-compose"
