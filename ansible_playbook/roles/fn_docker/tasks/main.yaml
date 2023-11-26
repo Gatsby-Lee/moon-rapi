@@ -1,6 +1,9 @@
 # --
-# ref: https://docs.ansible.com/ansible/latest/tips_tricks/sample_setup.html#sample-task-and-handler-files-in-a-function-based-role
 # Function based Role
+# ref: https://docs.ansible.com/ansible/latest/tips_tricks/sample_setup.html#sample-task-and-handler-files-in-a-function-based-role
+#
+# Role: Setup Docker
+# ref: https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-20-04
 # --
 
 - name: Print a message
@@ -36,7 +39,9 @@
     state: present
 - name: Add Docker repository
   apt_repository:
-    repo: deb [arch=arm64] https://download.docker.com/linux/debian bookworm stable
+    # The fully built repo can be "deb [arch=arm64] https://download.docker.com/linux/debian bookworm stable"
+    # @TODO: Figure out / replace the static `arm64` to dynamic.
+    repo: deb [arch=arm64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable
     state: present
 
 ## Ansible 2.15 is required. ( currently mine is 2.14 )
