@@ -1,0 +1,77 @@
+# --
+# ref: https://docs.ansible.com/ansible/latest/tips_tricks/sample_setup.html#sample-task-and-handler-files-in-a-function-based-role
+# Function based Role
+# --
+
+- name: Print a message
+  ansible.builtin.debug:
+    msg: ">>>>>>>>>> START: setting up Docker"
+
+# Install aptitude, which is preferred by Ansible as an alternative to the apt package manager.
+- name: Install aptitude
+  apt:
+    state: latest
+    update_cache: true
+    name: aptitude
+
+- name: Install required packages
+  apt:
+    state: latest
+    update_cache: true
+    name:
+      - ca-certificates
+      - curl
+      - gnupg2
+      - apt-transport-https
+      - software-properties-common
+
+## Add Docker Repo
+# @note apt_key is deprecated in Debian/Ubuntu
+# ref: https://www.jeffgeerling.com/blog/2022/aptkey-deprecated-debianubuntu-how-fix-ansible
+# ref: https://docs.docker.com/engine/install/debian/
+# /etc/apt/sources.list.d/download_docker_com_linux_debian.list
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+- name: Add Docker repository
+  apt_repository:
+    repo: deb [arch=arm64] https://download.docker.com/linux/debian bookworm stable
+    state: present
+
+## Ansible 2.15 is required. ( currently mine is 2.14 )
+# - name: Add Docker Repo with GPG Key
+#   ansible.builtin.deb822_repository:
+#     name: docker
+#     types: [deb]
+#     architectures: arm64
+#     uris: "https://download.docker.com/linux/debian"
+#     components: [binary]
+#     signed_by: https://download.docker.com/linux/debian/gpg
+#     state: present
+#     enabled: true
+
+- name: Install Docker Packages
+  apt:
+    state: latest
+    update_cache: true
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+
+- name: Add currnt user to Docker group
+  user:
+    name: "{{ current_user }}"
+    groups: docker
+
+- name: Start Docker service
+  service:
+    name: docker
+    state: started
+
+- name: Print a message
+  ansible.builtin.debug:
+    msg: "<<<<<<<<<< END: setting up Docker"

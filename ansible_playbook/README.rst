@@ -35,9 +35,34 @@ Other ways to run playbook locally
       connection: local
 
 
+Run playbook Remotely
+---------------------
+
+* https://docs.ansible.com/ansible/latest/inventory_guide/connection_details.html
+
+.. code-block:: bash
+
+    # Run with CLI params
+    ansible-playbook --inventory [ip,hostname,], --user <ssh-user> --private-key ~/.ssh/<private-key> --check setup-rpi-bookworm-to-dns-node-v1.yaml
+
+
 Install Ansible in Raspberry Pi
 -------------------------------
 
 .. code-block:: bash
 
     sudo apt install ansible
+
+Ansible Playbook
+----------------
+
+.. code-block:: bash
+
+    # check playbook
+    ansible-playbook --check setup-rpi-bookworm-to-dns-node-v1.yaml
+
+
+Roles
+-----
+
+* https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
