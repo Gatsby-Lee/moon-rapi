@@ -56,11 +56,13 @@
     state: latest
     update_cache: true
     name:
-      - docker-ce
-      - docker-ce-cli
       - containerd.io
       - docker-buildx-plugin
+      - docker-ce
+      - docker-ce-cli
       - docker-compose-plugin
+      # this module is required to run `docker` command through Ansible.
+      - python3-docker
 
 - name: Add currnt user to Docker group
   user:

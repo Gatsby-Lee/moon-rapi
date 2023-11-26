@@ -13,9 +13,9 @@ services:
       - ${PWD}/custom_unbound.sh:/unbound.sh:ro
       - ${PWD}/root.hints:/opt/unbound/etc/unbound/var/root.hints:ro
 
-networks:
-  # docker network create --driver bridge wowbro-dns-net
-  # ref: https://docs.docker.com/compose/networking/
-  default:
-    name: wowbro-dns-net
-    external: true
+# networks:
+#   # docker network create --driver bridge wowbro-dns-net
+#   # ref: https://docs.docker.com/compose/networking/
+#   default:
+#     name: private-net
+#     external: true
