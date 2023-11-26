@@ -1,1 +1,2 @@
-fn_docker__path_docker_compose: /usr/local/bin/docker-compose-bk
+# defined to reduce the repeated name.
+fn_docker__path_docker_compose: /usr/local/bin/docker-compose

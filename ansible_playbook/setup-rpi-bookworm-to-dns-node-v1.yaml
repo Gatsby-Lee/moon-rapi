@@ -32,6 +32,12 @@
       # ref: https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html#special-variables
       current_user: "{{ ansible_user }}"
 
+  # somehow, Ansible still uses `docker-compose` rather than `docker compose`
+  - name: Setup Docker Compose
+    include_role:
+      name: fn_docker
+      tasks_from: setup-compose
+
   # ref: https://github.com/fnazz/docker-adguard-unbound-wireguard/blob/main/docker-compose.yml
   # ref: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_network_module.html
   - name: Create Docker network - bridge
