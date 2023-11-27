@@ -48,6 +48,8 @@ Run playbook Remotely
     ansible-playbook --inventory [ip,hostname,], --user <ssh-user> --private-key ~/.ssh/<private-key> setup-rpi-bookworm-to-dns-node-v1.yaml --list-hosts
     # although the tags are specified, the all list of play will be shown in --list-hosts.
     ansible-playbook --inventory [ip,hostname,], --user <ssh-user> --private-key ~/.ssh/<private-key> setup-rpi-bookworm-to-dns-node-v1.yaml --tags "setup_unbound"
+    # stop service by executing "tear down" task.
+    ansible-playbook --inventory [ip,hostname,], --user <ssh-user> --private-key ~/.ssh/<private-key> setup-rpi-bookworm-to-dns-node-v1.yaml --tags "stop_service" --list-tasks
 
 
 Install Ansible in Raspberry Pi

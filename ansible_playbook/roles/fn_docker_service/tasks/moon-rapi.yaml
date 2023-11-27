@@ -10,19 +10,22 @@
   community.docker.docker_compose:
     project_src: "/opt/moon-rapi/{{ service_name }}"
     state: absent
+  tags: [ stop_service ]
 
 - name: "Create and start services - {{ service_name }}"
   community.docker.docker_compose:
     project_src: "/opt/moon-rapi/{{ service_name }}"
   register: output
+  tags: [ start_service ]
 
 - name: Show results
   ansible.builtin.debug:
     var: output
   # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html#special-tags-always-and-never
-  tags: [ never, debug ]
+  tags: [ never, debug, start_service ]
 
 - name: Verify services are running
   ansible.builtin.assert:
     that:
       - "output.services.{{ service_name }}.{{ service_name }}.state.running"
+  tags: [ start_service ]
