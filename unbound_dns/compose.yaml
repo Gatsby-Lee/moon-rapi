@@ -1,8 +1,8 @@
 version: '3'
 services:
-  unbound:
+  unbound_dns:
     image: "wowbro/unbound-dns-rpi:1.17.1"
-    container_name: unbound
+    container_name: unbound_dns
     hostname: "unbound"
     restart: unless-stopped
     ports:
