@@ -1,0 +1,6 @@
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
+- name: Include Tasks - Setup Docker
+  ansible.builtin.include_tasks: main.yaml
+
+- name: Include Tasks - Setup docker-compose
+  ansible.builtin.include_tasks: setup-compose.yaml

@@ -13,20 +13,28 @@
 
 - name: Print a message
   ansible.builtin.debug:
-    msg: ">>>>>>>>>> START: setting up docker-compose"
+    msg: ">>>>>>>>>> START: setting up docker-compose | my_os_family_linux_centric={{ my_os_family_linux_centric }} | ansible_architecture={{ ansible_architecture }}"
 
 # ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html
 - name: "Download docker-compose to {{ fn_docker__path_docker_compose }} "
   ansible.builtin.get_url:
     # ref: https://github.com/docker/compose/releases
     # RPi 64: https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-aarch64
-    url: "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-{{ my_os_family_linux_centric }}-{{ ansible_architecture }}"
+    url: "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-{{ my_os_family_linux_centric | lower }}-{{ ansible_architecture }}"
     dest: "{{ fn_docker__path_docker_compose }}"
 
+# ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/stat_module.html
+- name: "Get stats of {{ fn_docker__path_docker_compose }}"
+  ansible.builtin.stat:
+    path: "{{ fn_docker__path_docker_compose }}"
+  register: reg__docker_compose_file_stats
+
+# ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
 - name: Grant executions permission
   ansible.builtin.file:
     path: "{{ fn_docker__path_docker_compose }}"
     mode: "0755"
+  when: reg__docker_compose_file_stats.stat.exists
 
 - name: Print a message
   ansible.builtin.debug:

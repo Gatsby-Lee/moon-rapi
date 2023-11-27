@@ -1,8 +1,8 @@
-## Playbook: Setup Docker Compose
+## Playbook: Setup Docker and docker-compose
 ## Steps
-#  step 1: execute fn_docker.setup-compose tasks
+#  step 1: execute in tasks fn_docker/tasks/setup-docker-and-composz
 ---
-- name: === Setup Docker Compose
+- name: === Setup Docker and docker-compose
   hosts: all
   # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
   # ref: https://docs.ansible.com/ansible/latest/plugins/become.html#become-plugins
@@ -10,9 +10,13 @@
   become_user: root
   tasks:
   - include_vars: main.yaml
-  - name: Setup Docker Compose
+  - name: Setup Docker and docker-compose
     # ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_role_module.html
     include_role:
       name: fn_docker
       # ref: https://stackoverflow.com/questions/73724567/how-to-have-multiple-tasks-under-one-role-in-ansible
-      tasks_from: setup-compose
+      tasks_from: setup-docker-and-composz
+    vars:
+      # ansible_user is special-variable
+      # ref: https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html#special-variables
+      current_user: "{{ ansible_user }}"

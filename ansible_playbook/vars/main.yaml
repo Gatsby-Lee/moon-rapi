@@ -1,14 +1,17 @@
 ## Define a mapping which can return "arm64"
 # Use Cases:
 # @TODO: monitor if this is only for Docker repo. If so, then this var should be moved to role:fn_docker
-# - In role:fn_docker, Docker in Debian OS uses `arm64` over `aarch64` as architecture.
+# - In role:fn_docker/tasks/main.yaml, Docker in Debian OS uses `arm64` over `aarch64` as architecture.
 my_os_arch_arm_centric_map:
   aarch64: arm64
-my_os_arch_arm_centric: "{{ ansible_architecture if ansible_architecture not in my_os_arch_arm_centric_map }}"
+my_os_arch_arm_centric: "{{ ansible_architecture if ansible_architecture not in my_os_arch_arm_centric_map else my_os_arch_arm_centric_map[ansible_architecture] }}"
 
 ## Define a mapping which can return "linux"
+# Use Cases:
+# - In role:fn_docker/tasks/setup-compose.yaml, the docker-compose's artifact in github uses "linux"
+#
 # @note: intend to return the CamelCase to match to the current ansible_os_family.
 # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_conditionals.html#ansible-facts-os-family
 my_os_family_linux_centric_map:
   Debian: Linux
-my_os_family_linux_centric: "{{ ansible_os_family if ansible_os_family not in my_os_family_linux_centric_map }}"
+my_os_family_linux_centric: "{{ ansible_os_family if ansible_os_family not in my_os_family_linux_centric_map else my_os_family_linux_centric_map[ansible_os_family] }}"

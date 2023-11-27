@@ -20,11 +20,11 @@
   # become_user: root
   tasks:
 
-  - name: Show ansible_facts
-    ansible.builtin.debug:
-      # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_conditionals.html
-      # ansible_facts is a dict ( nested ) which has a comprehensive info.
-      msg: "{{ ansible_facts }}"
+  # - name: Show ansible_facts
+  #   ansible.builtin.debug:
+  #     # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_conditionals.html
+  #     # ansible_facts is a dict ( nested ) which has a comprehensive info.
+  #     msg: "{{ ansible_facts }}"
 
   # @note: `include_vars` looks for main.yaml in ./vars
   - include_vars: main.yaml
@@ -41,6 +41,6 @@
 
   - name: Show Variable Values
     ansible.builtin.debug:
-      # on macOS ( Intel ): "22.6.0 | macosx | Darwin | x86_64"
+      # on macOS ( Intel ):                     "22.6.0   | macosx | Darwin | x86_64"
       # on Raspberry Pi - Bookworm ( aarch64 ): "bookworm | debian | Debian | aarch64"
       msg: "{{ ansible_distribution_release }} | {{ ansible_distribution | lower }} | {{ ansible_os_family }} | {{ ansible_architecture }}"
