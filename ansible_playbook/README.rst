@@ -45,6 +45,9 @@ Run playbook Remotely
     # Run with CLI params
     # --check won't do the real execution.
     ansible-playbook --inventory [ip,hostname,], --user <ssh-user> --private-key ~/.ssh/<private-key> --check setup-rpi-bookworm-to-dns-node-v1.yaml
+    ansible-playbook --inventory [ip,hostname,], --user <ssh-user> --private-key ~/.ssh/<private-key> setup-rpi-bookworm-to-dns-node-v1.yaml --list-hosts
+    # although the tags are specified, the all list of play will be shown in --list-hosts.
+    ansible-playbook --inventory [ip,hostname,], --user <ssh-user> --private-key ~/.ssh/<private-key> setup-rpi-bookworm-to-dns-node-v1.yaml --tags "setup_unbound"
 
 
 Install Ansible in Raspberry Pi
@@ -53,6 +56,7 @@ Install Ansible in Raspberry Pi
 .. code-block:: bash
 
     sudo apt install ansible
+
 
 Ansible Playbook
 ----------------
