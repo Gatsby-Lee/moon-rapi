@@ -19,6 +19,8 @@
 - name: Show results
   ansible.builtin.debug:
     var: output
+  # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html#special-tags-always-and-never
+  tags: [ never, debug ]
 
 - name: Verify services are running
   ansible.builtin.assert:

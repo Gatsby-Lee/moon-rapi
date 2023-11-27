@@ -1,6 +1,6 @@
 ---
-## === PLAY 1/3
-- name: === (1/3) Setup Raspberry Pi Bookworm to DNS node - v1
+## === PLAY 1/2
+- name: === (1/2) Install required pakcages / Setup Docker
   tags: setup_docker
   hosts: all
   # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
@@ -58,22 +58,43 @@
       single_branch: yes
       version: main
 
-## === PLAY 2/3
+## === PLAY 2/2
 # https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-20-04
-- name: === (2/3) Start unbound_dns on Docker
-  tags: setup_unbound
+- name: === (2/2) Start Services
+  tags:
+    - setup_services
   hosts: all
   # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
   # ref: https://docs.ansible.com/ansible/latest/plugins/become.html#become-plugins
   become: true
   become_user: root
-  vars:
-    service_name: unbound_dns
   tasks:
 
+  # !! tags in `include_role` doesn't work because it just includes files.
+  #   The `include_role` doesn't push the tags to the included tasks,
+  #     so, the included task won't be executed.
+  # ref: https://stackoverflow.com/questions/71946471/ansible-tags-not-recognized-during-a-play
+  #
+  # !! Use `import_role`. It will push down the tags to included tasks. ( side-effect: all tasks will run. )
+  #
+  # !! Another approach can be setting a individual play.
+
   # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
-  - name: "Setup Service - {{ service_name }}"
-    include_role:
+  - name: "Setup Service - unbound_dns"
+    tags: [ setup_unbound_dns ]
+    import_role:
       name: fn_docker_service
       # ref: https://stackoverflow.com/questions/73724567/how-to-have-multiple-tasks-under-one-role-in-ansible
       tasks_from: moon-rapi
+    vars:
+      service_name: unbound_dns
+
+  # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
+  - name: "Setup Service - adguard"
+    tags: [ setup_adguard ]
+    import_role:
+      name: fn_docker_service
+      # ref: https://stackoverflow.com/questions/73724567/how-to-have-multiple-tasks-under-one-role-in-ansible
+      tasks_from: moon-rapi
+    vars:
+      service_name: adguard
