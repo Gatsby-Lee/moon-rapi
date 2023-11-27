@@ -1,8 +1,7 @@
 ---
 ## === PLAY 1/3
 - name: === (1/3) Setup Raspberry Pi Bookworm to DNS node - v1
-  tags:
-  - setup_docker
+  tags: setup_docker
   hosts: all
   # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
   # ref: https://docs.ansible.com/ansible/latest/plugins/become.html#become-plugins
@@ -62,8 +61,7 @@
 ## === PLAY 2/3
 # https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-20-04
 - name: === (2/3) Start unbound_dns on Docker
-  tags:
-  - setup_unbound
+  tags: setup_unbound
   hosts: all
   # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
   # ref: https://docs.ansible.com/ansible/latest/plugins/become.html#become-plugins
@@ -73,29 +71,9 @@
     service_name: unbound_dns
   tasks:
 
-  # ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
-  - name: "Create `/mnt/dockers/{{ service_name }}` if it does not exist"
-    ansible.builtin.file:
-      path: /mnt/dockers/{{ service_name }}
-      state: directory
-      mode: '0755'
-
-  # ref: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
-  - name: "Tear down existing service - {{ service_name }}"
-    community.docker.docker_compose:
-      project_src: "/opt/moon-rapi/{{ service_name }}"
-      state: absent
-
-  - name: "Create and start services - {{ service_name }}"
-    community.docker.docker_compose:
-      project_src: "/opt/moon-rapi/{{ service_name }}"
-    register: output
-
-  - name: Show results
-    ansible.builtin.debug:
-      var: output
-
-  - name: Verify services are running
-    ansible.builtin.assert:
-      that:
-        - "output.services.{{ service_name }}.{{ service_name }}.state.running"
+  # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
+  - name: "Setup Service - {{ service_name }}"
+    include_role:
+      name: fn_docker_service
+      # ref: https://stackoverflow.com/questions/73724567/how-to-have-multiple-tasks-under-one-role-in-ansible
+      tasks_from: moon-rapi
