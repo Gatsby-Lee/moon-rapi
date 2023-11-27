@@ -3,4 +3,4 @@
   ansible.builtin.include_tasks: main.yaml
 
 - name: Include Tasks - Setup docker-compose
-  ansible.builtin.include_tasks: setup-compose.yaml
+  ansible.builtin.include_tasks: setup-compose-direct-download.yaml

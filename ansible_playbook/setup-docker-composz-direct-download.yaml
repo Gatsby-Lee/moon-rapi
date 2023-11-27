@@ -15,4 +15,4 @@
     include_role:
       name: fn_docker
       # ref: https://stackoverflow.com/questions/73724567/how-to-have-multiple-tasks-under-one-role-in-ansible
-      tasks_from: setup-compose
+      tasks_from: setup-compose-direct-download

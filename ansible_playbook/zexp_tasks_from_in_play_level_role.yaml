@@ -2,7 +2,7 @@
 # The `tasks_from`
 ## Playbook: Setup Docker Compose
 ## Steps
-#  step 1: execute fn_docker.setup-compose tasks
+#  step 1: execute fn_docker.setup-compose-direct-download tasks
 ---
 - name: === Setup Docker Compose
   hosts: all
@@ -15,4 +15,4 @@
   # role always uses fn_docker/tasks/main.yaml
   roles:
     - role: "fn_docker"
-      tasks_from: setup-compose
+      tasks_from: setup-compose-direct-download

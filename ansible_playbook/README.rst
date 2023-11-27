@@ -43,6 +43,7 @@ Run playbook Remotely
 .. code-block:: bash
 
     # Run with CLI params
+    # --check won't do the real execution.
     ansible-playbook --inventory [ip,hostname,], --user <ssh-user> --private-key ~/.ssh/<private-key> --check setup-rpi-bookworm-to-dns-node-v1.yaml
 
 

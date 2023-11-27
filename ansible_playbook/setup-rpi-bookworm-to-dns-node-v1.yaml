@@ -11,6 +11,8 @@
   #   current_user: "{{ lookup('env', 'USER') }}"
   tasks:
 
+  - include_vars: main.yaml
+
   # ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
   - name: Install required packages
     ansible.builtin.apt:
@@ -26,17 +28,11 @@
     include_role:
       name: fn_docker
       # ref: https://stackoverflow.com/questions/73724567/how-to-have-multiple-tasks-under-one-role-in-ansible
-      tasks_from: main # Intentionally defined to remember later - it can be used to include different tasks file in the role.
+      tasks_from: setup-docker-and-composz # Intentionally defined to remember later - it can be used to include different tasks file in the role.
     vars:
       # ansible_user is special-variable
       # ref: https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html#special-variables
       current_user: "{{ ansible_user }}"
-
-  # somehow, Ansible still uses `docker-compose` rather than `docker compose`
-  - name: Setup Docker Compose
-    include_role:
-      name: fn_docker
-      tasks_from: setup-compose
 
   # ref: https://github.com/fnazz/docker-adguard-unbound-wireguard/blob/main/docker-compose.yml
   # ref: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_network_module.html
@@ -54,13 +50,6 @@
       single_branch: yes
       version: main
 
-  # ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
-  - name: Create `/mnt/dockers/adguard` if it does not exist
-    ansible.builtin.file:
-      path: /mnt/dockers/adguard
-      state: directory
-      mode: '0755'
-
 ## === PLAY 2/2
 # https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-20-04
 - name: === (2/2) Start Services on Docker
@@ -73,6 +62,13 @@
   # vars:
   #   current_user: "{{ lookup('env', 'USER') }}"
   tasks:
+
+  # ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
+  - name: Create `/mnt/dockers/adguard` if it does not exist
+    ansible.builtin.file:
+      path: /mnt/dockers/adguard
+      state: directory
+      mode: '0755'
 
   - name: Tear down existing services
     community.docker.docker_compose:
