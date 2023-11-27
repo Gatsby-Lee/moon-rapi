@@ -30,6 +30,7 @@
       name:
         - ansible  # in case, running ansible on local.
         - dnsutils # dig
+        - sysstat  # iostat
 
   # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
   - name: Setup Docker
