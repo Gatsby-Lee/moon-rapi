@@ -9,9 +9,10 @@ services:
       - "5335:53/tcp"
       - "5335:53/udp"
     volumes:
-      # - ./custom_unbound.sh:/unbound.sh:ro
-      - ${PWD}/custom_unbound.sh:/unbound.sh:ro
-      - ${PWD}/root.hints:/opt/unbound/etc/unbound/var/root.hints:ro
+      # - ${PWD}/custom_unbound.sh:/unbound.sh:ro
+      # - ${PWD}/root.hints:/opt/unbound/etc/unbound/var/root.hints:ro
+      - ./custom_unbound.sh:/unbound.sh:ro
+      - ./root.hints:/opt/unbound/etc/unbound/var/root.hints:ro
 
 # networks:
 #   # docker network create --driver bridge wowbro-dns-net
