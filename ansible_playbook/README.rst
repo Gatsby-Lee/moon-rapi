@@ -1,6 +1,13 @@
 Ansible
 =======
 
+Naming Convention
+-----------------
+
+* playbook with `install-*`: setting up or installing specfic groups of softwares or modification on the target.
+* playbook with `machine-setup-*`: end-to-end setting up a machine for a specific purpose.
+
+
 Run Playbook Locally
 --------------------
 
