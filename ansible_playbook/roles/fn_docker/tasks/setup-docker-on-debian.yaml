@@ -37,12 +37,15 @@
   apt_key:
     url: https://download.docker.com/linux/debian/gpg
     state: present
+- name: Print a variables
+  ansible.builtin.debug:
+    msg: "my_os_arch_arm_centric={{ my_os_arch_arm_centric }} , lowered_ansible_distribution={{ ansible_distribution | lower }} , ansible_distribution_release={{ ansible_distribution_release }}"
 - name: Add Docker repository
   apt_repository:
     # ref: https://download.docker.com/linux/debian/dists/bookworm/stable/
     # The fully built repo can be "deb [arch=arm64] https://download.docker.com/linux/debian bookworm stable"
     # @TODO: Figure out / replace the static `arm64` to dynamic.
-    repo: deb [arch=arm64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable
+    repo: deb [arch={{ my_os_arch_arm_centric }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable
     state: present
 
 ## Ansible 2.15 is required. ( currently mine is 2.14 )
