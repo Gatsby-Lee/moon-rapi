@@ -2,8 +2,8 @@
 # Function based Role
 # ref: https://docs.ansible.com/ansible/latest/tips_tricks/sample_setup.html#sample-task-and-handler-files-in-a-function-based-role
 #
-# Role: Setup Docker
-# ref: https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-20-04
+# Role: Setup Tailscale
+# ref: https://tailscale.com/download/linux/debian-bookworm
 # --
 
 - name: Print a message
@@ -11,13 +11,13 @@
     msg: ">>>>>>>>>> START: setting up Tailscale"
 
 # ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html
-- name: "Download GPG "
+- name: "Download GPG"
   ansible.builtin.get_url:
     # https://tailscale.com/download/linux/debian-bookworm
     url: "https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg"
     dest: "/usr/share/keyrings/tailscale-archive-keyring.gpg"
 
-- name: "Download GPG "
+- name: "Create APT Source list"
   ansible.builtin.get_url:
     # https://tailscale.com/download/linux/debian-bookworm
     url: "https://pkgs.tailscale.com/stable/debian/bookworm.tailscale-keyring.list"

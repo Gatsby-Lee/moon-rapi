@@ -1,0 +1,40 @@
+# --
+# Function based Role
+# ref: https://docs.ansible.com/ansible/latest/tips_tricks/sample_setup.html#sample-task-and-handler-files-in-a-function-based-role
+#
+# Role: Setup Cloudflared
+# ref: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/
+# --
+
+- name: Print a message
+  ansible.builtin.debug:
+    msg: ">>>>>>>>>> START: setting up cloudflared"
+
+# ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html
+- name: "Download GPG"
+  ansible.builtin.get_url:
+    url: "https://pkg.cloudflare.com/cloudflare-main.gpg"
+    dest: "/usr/share/keyrings/cloudflare-main.gpg"
+
+- name: Add Docker repository
+  ansible.builtin.apt_repository:
+    repo: deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared {{ ansible_distribution_release }} main
+    state: present
+
+# Install aptitude, which is preferred by Ansible as an alternative to the apt package manager.
+- name: Install aptitude
+  apt:
+    state: latest
+    update_cache: true
+    name: aptitude
+
+- name: Install Packages
+  apt:
+    state: latest
+    update_cache: true
+    name:
+      - cloudflared
+
+- name: Print a message
+  ansible.builtin.debug:
+    msg: "<<<<<<<<<< END: setting up cloudflared"

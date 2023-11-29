@@ -44,7 +44,6 @@
   apt_repository:
     # ref: https://download.docker.com/linux/debian/dists/bookworm/stable/
     # The fully built repo can be "deb [arch=arm64] https://download.docker.com/linux/debian bookworm stable"
-    # @TODO: Figure out / replace the static `arm64` to dynamic.
     repo: deb [arch={{ my_os_arch_arm_centric }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable
     state: present
 
