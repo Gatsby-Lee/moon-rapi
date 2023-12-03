@@ -63,8 +63,12 @@ Create Route - Routing Traffic through Public Hostname
   # @note: currently, the dns record can be removed only through Cloudflare dashboard
   # @note: the created dns entries can be seen only through Cloudflare dashboard
   # @note: It will fail if the CNAME entry already exists.
+  # @note: IMPORTANT: Unlike Cloudflare Dashboard, CLI approach requires manual DNS creation.
+  cloudflared tunnel route dns wowamazon-local wowamazon.party
   cloudflared tunnel route dns wowamazon-local *.wowamazon.party
 
+  ## NOT necessary!!
+  ## == Routing Traffic through Pubilc Hostname doesn't require Route IP
   ## create route ip
   # @note: Although the tunnel name doesn't match, it will still be created. - unexpected
   cloudflared tunnel route ip add 192.168.128.21/32 wowamazon-local
