@@ -54,6 +54,7 @@ Create Route - Routing Traffic through Public Hostname
   ## create dns record with wildcard
   # @note: currently, the dns record can be removed only through Cloudflare dashboard
   # @note: the created dns entries can be seen only through Cloudflare dashboard
+  # @note: It will fail if the CNAME entry already exists.
   cloudflared tunnel route dns wowamazon-local *.wowamazon.party
 
   ## create route ip
