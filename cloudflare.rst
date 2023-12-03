@@ -83,7 +83,7 @@ Run Cloudflare
 
 .. code-block:: bash
 
-  cloudflared tunnel run
+  cloudflared tunnel run wowamazon-local
   cloudflared tunnel --config /path/your-config-file.yml run
 
 
