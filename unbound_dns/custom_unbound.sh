@@ -39,6 +39,9 @@ if [ ! -f /opt/unbound/etc/unbound/unbound.conf ]; then
         -e "s/@SLABS@/${slabs}/" \
         > /opt/unbound/etc/unbound/unbound.conf << EOT
 server:
+    #
+    # ref: https://unbound.docs.nlnetlabs.nl/en/latest/manpages/unbound.conf.html
+    #
     ###########################################################################
     # BASIC SETTINGS
     ###########################################################################
@@ -56,6 +59,12 @@ server:
     # especially more than an hour or so, can lead to trouble as the data in
     # the cache does not match up with the actual data any more.
     cache-min-ttl: 300
+
+    # Time to live maximum for negative responses,
+    # these have a SOA in the authority section that is limited in time.
+    # This applies to NXDOMAIN and NODATA answers
+    # default: 3600
+    cache-max-negative-ttl: 1
 
     # Set the working directory for the program.
     directory: "/opt/unbound/etc/unbound"
