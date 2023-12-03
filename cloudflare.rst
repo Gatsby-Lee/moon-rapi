@@ -43,6 +43,14 @@ Create a Tunnel
   ## Get tunnel info
   cloudflared tunnel info wowamazon-local
 
+Create VNET ( Virtual Network )
+-------------------------------
+
+.. code-block:: bash
+
+  cloudflared tunnel vnet list
+
+
 Create Route - Routing Traffic through Public Hostname
 ------------------------------------------------------
 
