@@ -10,6 +10,9 @@ Entities
 * Route IP ( route ip )
 * Virtual Network ( vnet )
 
+ref: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/
+
+
 Login / Get cert.pem
 --------------------
 
@@ -43,19 +46,31 @@ Create a Tunnel
   ## Get tunnel info
   cloudflared tunnel info wowamazon-local
 
-Create VNET ( Virtual Network )
--------------------------------
+Create Configuration
+--------------------
 
-.. code-block:: bash
+* https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/
+* https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/
 
-  cloudflared tunnel vnet list
+.. code-block:: yaml
+
+tunnel: <tunnel-uuid>
+credentials-file: <credential-json-when-logged-in>
+
+ingress:
+  - hostname: wowamazon.party
+    service: http://192.168.128.21:80
+  # Rules can match the request's hostname to a wildcard character:
+  - hostname: "*.wowamazon.party"
+    service: http://192.168.128.21:80
+  # Configuration files that contain ingress rules must always include a catch-all rule that concludes the file.
+  - service: http_status:404
 
 
 Create Route - Routing Traffic through Public Hostname
 ------------------------------------------------------
 
 * https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/
-* https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/
 
 .. code-block:: bash
 
@@ -67,34 +82,17 @@ Create Route - Routing Traffic through Public Hostname
   cloudflared tunnel route dns wowamazon-local wowamazon.party
   cloudflared tunnel route dns wowamazon-local *.wowamazon.party
 
-  ## NOT necessary!!
-  ## == Routing Traffic through Pubilc Hostname doesn't require Route IP
-  ## create route ip
-  # @note: Although the tunnel name doesn't match, it will still be created. - unexpected
-  cloudflared tunnel route ip add 192.168.128.21/32 wowamazon-local
-
-  ## delete route ip
-  cloudflared tunnel route ip delete 192.168.128.21/32
-
-  ## list / get route ip
-  cloudflared tunnel route ip show
-  cloudflared tunnel route ip list
-  cloudflared tunnel route ip get 192.168.128.21
-
 
 Run Cloudflare
 --------------
 
 .. code-block:: bash
 
+  # @note: this is not a detached service.
   cloudflared tunnel run wowamazon-local
   cloudflared tunnel --config /path/your-config-file.yml run
 
-
-Deploy new Config with Replicas
--------------------------------
-
-* https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/#update-a-configuration-file
+* https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/
 
 
 Run clound as service
@@ -105,6 +103,13 @@ Run clound as service
 .. code-block:: bash
 
   # TBD
+
+
+
+Deploy new Config with Replicas
+-------------------------------
+
+* https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/#update-a-configuration-file
 
 
 References
