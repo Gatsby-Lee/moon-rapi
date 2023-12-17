@@ -1,0 +1,31 @@
+# ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
+- name: "Create `/mnt/dockers/{{ service_name }}` if it does not exist"
+  ansible.builtin.file:
+    path: /mnt/dockers/{{ service_name }}
+    state: directory
+    mode: '0755'
+
+# ref: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
+- name: "Tear down existing service - {{ service_name }}"
+  community.docker.docker_compose:
+    project_src: "{{ project_path }}/{{ service_name }}"
+    state: absent
+  tags: [ stop_service ]
+
+- name: "Create and start services - {{ service_name }}"
+  community.docker.docker_compose:
+    project_src: "{{ project_path }}/{{ service_name }}"
+  register: output
+  tags: [ start_service ]
+
+- name: Show results
+  ansible.builtin.debug:
+    var: output
+  # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html#special-tags-always-and-never
+  tags: [ never, debug, start_service ]
+
+- name: Verify services are running
+  ansible.builtin.assert:
+    that:
+      - "output.services.{{ service_name }}.{{ service_name }}.state.running"
+  tags: [ start_service ]

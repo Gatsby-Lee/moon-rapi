@@ -15,10 +15,11 @@ On MacOS, if SSH fails due to the DNS resolution
 .ssh permission
 ---------------
 
-.. code-block:: bavsh
+.. code-block:: bash
 
   chmod 700 ~/.ssh
   chmod 600 ~/.ssh/authorized_keys
+
 
 .ssh/config OR .ssh_config
 -------------------------
