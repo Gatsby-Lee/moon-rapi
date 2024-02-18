@@ -33,18 +33,18 @@ Create a Tunnel
   # 1. Create a tunnel by establishing a persistent relationship between the name you provide and a UUID for your tunnel.
   # 2. Generate a tunnel `credentials file (*.json) in the default cloudflared directory ( /home/<user>/.cloudflared ).
   # 3. Create a subdomain of .cfargotunnel.com ( currently not able to find it until creating a DNS CNAME )
-  cloudflared tunnel create wowamazon-local
+  cloudflared tunnel create wowamazon
   cloudflared tunnel list
 
   ## delete tunnel
   # @note: A tunnel cannot be deleted if it has active connections.
   # @note: To delete it forcefully, `-f` can be used
   # @note: when the tunnel is deleted, the tunnel credential in /home/<user>/.cloudflared/<tunnel-uuid>.json will be removed as well.
-  cloudflared tunnel delete wowamazon-local
-  cloudflared tunnel delete wowamazon-local -f
+  cloudflared tunnel delete wowamazon
+  cloudflared tunnel delete wowamazon -f
 
   ## Get tunnel info
-  cloudflared tunnel info wowamazon-local
+  cloudflared tunnel info wowamazon
 
 Create Configuration
 --------------------
@@ -79,8 +79,8 @@ Create Route - Routing Traffic through Public Hostname
   # @note: the created dns entries can be seen only through Cloudflare dashboard
   # @note: It will fail if the CNAME entry already exists.
   # @note: IMPORTANT: Unlike Cloudflare Dashboard, CLI approach requires manual DNS creation.
-  cloudflared tunnel route dns wowamazon-local wowamazon.party
-  cloudflared tunnel route dns wowamazon-local *.wowamazon.party
+  cloudflared tunnel route dns wowamazon wowamazon.party
+  cloudflared tunnel route dns wowamazon www.wowamazon.party
 
 
 Run Cloudflare
@@ -89,7 +89,7 @@ Run Cloudflare
 .. code-block:: bash
 
   # @note: this is not a detached service.
-  cloudflared tunnel run wowamazon-local
+  cloudflared tunnel run wowamazon
   cloudflared tunnel --config /path/your-config-file.yml run
 
 * https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/

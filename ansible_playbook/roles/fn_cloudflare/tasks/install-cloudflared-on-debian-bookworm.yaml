@@ -8,7 +8,7 @@
 
 - name: Print a message
   ansible.builtin.debug:
-    msg: ">>>>>>>>>> START: setting up cloudflared"
+    msg: ">>>>>>>>>> START: install cloudflared"
 
 # ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html
 - name: "Download GPG"
@@ -16,7 +16,7 @@
     url: "https://pkg.cloudflare.com/cloudflare-main.gpg"
     dest: "/usr/share/keyrings/cloudflare-main.gpg"
 
-- name: Add Docker repository
+- name: Add Cloudflare repository
   ansible.builtin.apt_repository:
     repo: deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared {{ ansible_distribution_release }} main
     state: present
@@ -37,4 +37,4 @@
 
 - name: Print a message
   ansible.builtin.debug:
-    msg: "<<<<<<<<<< END: setting up cloudflared"
+    msg: "<<<<<<<<<< END: install cloudflared"

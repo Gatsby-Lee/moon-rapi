@@ -1,0 +1,63 @@
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
+- name: Include Tasks - Install cloudflared
+  ansible.builtin.include_tasks: "install-cloudflared-on-debian-{{ ansible_distribution_release }}.yaml"
+
+# ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
+# NOTE: the directory also be created while "cloudflare service"
+- name: "Create {{ fn_cloudflare__tunnel_config_path }} directory if it does not exist"
+  ansible.builtin.file:
+    path: "{{ fn_cloudflare__tunnel_config_path }}"
+    state: directory
+    mode: "0755"
+
+# === START: Setup Cloudflare Tunnel if defined by variables
+# - cloudflared_cert_perm_path
+# - cloudflared_tunnel_config_path
+# - cloudflared_tunnel_cred_path
+# - cloudflared_tunnel_id
+- name: "Copy Cloudflared login cert to {{ fn_cloudflare__tunnel_config_path }}/cert.pem"
+  ansible.builtin.copy:
+    src: "{{ cloudflared_cert_perm_path }}"
+    dest: "{{ fn_cloudflare__tunnel_config_path }}/cert.pem"
+    owner: root
+    group: root
+    mode: "0600"
+  when: cloudflared_cert_perm_path is defined
+- name: "Copy Cloudflared Tunnel config to {{ fn_cloudflare__tunnel_config_path }}/config.yml"
+  ansible.builtin.copy:
+    src: "{{ cloudflared_tunnel_config_path }}"
+    dest: "{{ fn_cloudflare__tunnel_config_path }}/config.yml"
+    owner: root
+    group: root
+    mode: "0600"
+  when: cloudflared_tunnel_config_path is defined
+- name: "Copy Cloudflared Tunnel credential to {{ fn_cloudflare__tunnel_config_path }}/{{ cloudflared_tunnel_id }}.json"
+  ansible.builtin.copy:
+    src: "{{ cloudflared_tunnel_cred_path }}"
+    dest: "{{ fn_cloudflare__tunnel_config_path }}/{{ cloudflared_tunnel_id }}.json"
+    owner: root
+    group: root
+    mode: "0600"
+  when: cloudflared_tunnel_cred_path is defined and cloudflared_tunnel_id is defined
+# === END: Setup Cloudflare Tunnel if defined by variables
+
+# === START: Install Cloudflare Service
+- name: "Check if Cloudflared Tunnel config exists. {{ fn_cloudflare__tunnel_config_path }}/config.yml"
+  stat:
+    path: "{{ fn_cloudflare__tunnel_config_path }}/config.yml"
+  register: cloudflare_tunnel_config_stat_result
+- name: "Check if Cloudflared Tunnel config exists. {{ fn_cloudflare__tunnel_config_path }}/config.yml"
+  stat:
+    path: "/etc/systemd/system/cloudflared.service"
+  register: cloudflared_service_stat_result
+- name: "Install cloudflared service if not installed."
+  # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html
+  ansible.builtin.shell:
+    cmd: cloudflared service install
+  when: cloudflare_tunnel_config_stat_result.stat.exists and not cloudflared_service_stat_result.stat.exists
+- name: Start cloudflared.service, if stopped.
+  # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/service_module.html
+  ansible.builtin.service:
+    name: cloudflared.service
+    state: started
+# === END: Install Cloudflare Service

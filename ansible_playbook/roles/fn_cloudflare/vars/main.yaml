@@ -1,0 +1,2 @@
+# defined to reduce the repeated name.
+fn_cloudflare__tunnel_config_path: /etc/cloudflared

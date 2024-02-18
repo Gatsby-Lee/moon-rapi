@@ -29,5 +29,8 @@ How to Create Private Repo with this repo as upstream?
   git clone https://github.com/<username>/moon-rapi-private
   cd moon-rapi-private
   git remote add upstream https://github.com/Gatsby-Lee/moon-rapi.git
-  git pull upstream main # Creates a merge commit
-  git push origin main # push to private
+  git pull upstream main # This will creates a merge commit
+  git push origin main # So, push to the merged commit to private if you'd like to merge it into your private repo.
+
+
+ref: https://stackoverflow.com/questions/10065526/github-how-to-make-a-fork-of-public-repository-private

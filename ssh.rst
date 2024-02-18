@@ -26,3 +26,8 @@ On MacOS, if SSH fails due to the DNS resolution
 
 https://goteleport.com/blog/ssh-config/
 
+
+Generate SSH key
+----------------
+
+ssh-keygen -t ed25519 -C "your_email@example.com"
