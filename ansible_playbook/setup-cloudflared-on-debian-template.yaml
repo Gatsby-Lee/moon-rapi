@@ -1,0 +1,65 @@
+## Playbook: Install cloudflared on Debian
+---
+- name: === Install required pakcages
+  hosts: all
+  # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
+  # ref: https://docs.ansible.com/ansible/latest/plugins/become.html#become-plugins
+  become: true
+  become_user: root
+  tasks:
+    - include_vars: main.yaml
+
+    # Install aptitude, which is preferred by Ansible as an alternative to the apt package manager.
+    # !! DO THIS FIRST before installing the major required packages
+    - name: Install aptitude
+      ansible.builtin.apt:
+        update_cache: true
+        state: latest
+        name: aptitude
+
+    # ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
+    - name: Install required packages
+      ansible.builtin.apt:
+        update_cache: true
+        state: latest
+        name:
+          - ansible # in case, running ansible on local.
+          - dnsutils # dig
+          - sysstat # iostat
+          - inetutils-traceroute # traceroute
+          # extra
+          - jq
+          - vim
+          # extra - SSL
+          - certbot
+          - python3-certbot-dns-cloudflare
+
+# https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-20-04
+- name: === Setup Cloudflare
+  tags:
+    - setup_cloudflared
+  hosts: all
+  # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
+  # ref: https://docs.ansible.com/ansible/latest/plugins/become.html#become-plugins
+  become: true
+  become_user: root
+
+  # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
+  tasks:
+    - include_vars: main.yaml
+    - name: Install cloudflared on Debian
+      # ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_role_module.html
+      include_role:
+        # expected results
+        # - install pkg
+        # - create /etc/cloudflare
+        # - copy the defined cloudflared config into /etc/cloudflared
+        # - install cloudflared service
+        name: fn_cloudflare
+        # ref: https://stackoverflow.com/questions/73724567/how-to-have-multiple-tasks-under-one-role-in-ansible
+        tasks_from: "setup-cloudflared-tunnel"
+      vars:
+        cloudflared_cert_perm_path: ../.key/cloudflared_cert.pem
+        cloudflared_tunnel_config_path: ../.key/cloudflared_tunnel_config.yml
+        cloudflared_tunnel_cred_path: ../.key/cloudflared_tunnel_cred.json
+        cloudflared_tunnel_id: <your-tunnel-id>
