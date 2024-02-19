@@ -14,7 +14,6 @@
 # - cloudflared_cert_perm_path
 # - cloudflared_tunnel_config_path
 # - cloudflared_tunnel_cred_path
-# - cloudflared_tunnel_id
 - name: "Copy Cloudflared login cert to {{ fn_cloudflare__tunnel_config_path }}/cert.pem"
   ansible.builtin.copy:
     src: "{{ cloudflared_cert_perm_path }}"
@@ -31,10 +30,10 @@
     group: root
     mode: "0600"
   when: cloudflared_tunnel_config_path is defined
-- name: "Copy Cloudflared Tunnel credential to {{ fn_cloudflare__tunnel_config_path }}/{{ cloudflared_tunnel_id }}.json"
+- name: "Copy Cloudflared Tunnel credential to {{ fn_cloudflare__tunnel_config_path }}/tunnel_cred.json"
   ansible.builtin.copy:
     src: "{{ cloudflared_tunnel_cred_path }}"
-    dest: "{{ fn_cloudflare__tunnel_config_path }}/{{ cloudflared_tunnel_id }}.json"
+    dest: "{{ fn_cloudflare__tunnel_config_path }}/tunnel_cred.json"
     owner: root
     group: root
     mode: "0600"

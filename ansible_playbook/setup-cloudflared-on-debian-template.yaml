@@ -62,4 +62,3 @@
         cloudflared_cert_perm_path: ../.key/cloudflared_cert.pem
         cloudflared_tunnel_config_path: ../.key/cloudflared_tunnel_config.yml
         cloudflared_tunnel_cred_path: ../.key/cloudflared_tunnel_cred.json
-        cloudflared_tunnel_id: <your-tunnel-id>
