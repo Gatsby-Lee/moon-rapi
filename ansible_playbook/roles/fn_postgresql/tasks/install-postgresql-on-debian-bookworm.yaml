@@ -1,0 +1,16 @@
+# Install aptitude, which is preferred by Ansible as an alternative to the apt package manager.
+# !! DO THIS FIRST before installing the major required packages
+- name: Install aptitude
+  ansible.builtin.apt:
+    update_cache: true
+    state: latest
+    name: aptitude
+
+# ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
+- name: Install required packages - PostgreSQL
+  ansible.builtin.apt:
+    update_cache: true
+    state: latest
+    name:
+      - postgresql
+      - postgresql-contrib

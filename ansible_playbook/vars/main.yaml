@@ -14,3 +14,18 @@ my_os_arch_arm_centric: "{{ ansible_architecture if ansible_architecture not in 
 my_os_family_linux_centric_map:
   Debian: Linux
 my_os_family_linux_centric: "{{ ansible_os_family if ansible_os_family not in my_os_family_linux_centric_map else my_os_family_linux_centric_map[ansible_os_family] }}"
+
+# ansible_user is undefined if -u is not specified.
+# based on this ref, I decided to use a custom and pre-defined user name.
+# https://dev.to/garrisond/the-lesson-learned-from-using-ansibleuser-variable-52ni
+dev_user: core
+
+## Normalized Ansible Variable
+# @TODO: 2024-03-03: Replace to the normalized variable. ( centralizing normalization )
+# `Debian` is normalized to `debian`
+normalized_ansible_distribution: "{{ ansible_distribution | lower }}"
+# `Bookworm` is normalized to `bookworm`
+normalized_ansible_distribution_release: "{{ ansible_distribution_release | lower }}"
+
+## Common
+letsencrypt_path: /etc/letsencrypt

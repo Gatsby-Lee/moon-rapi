@@ -1,0 +1,17 @@
+## Playbook: Install Tailscale on Debian
+---
+- name: === Install PostgreSQL
+  hosts: all
+  # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
+  # ref: https://docs.ansible.com/ansible/latest/plugins/become.html#become-plugins
+  become: true
+  become_user: root
+  # ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
+  tasks:
+    - include_vars: main.yaml
+    - name: Install PostgreSQL
+      # ref: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_role_module.html
+      include_role:
+        name: fn_postgresql
+        # ref: https://stackoverflow.com/questions/73724567/how-to-have-multiple-tasks-under-one-role-in-ansible
+        tasks_from: "install-postgresql-on-{{ normalized_ansible_distribution }}-{{ normalized_ansible_distribution_release }}.yaml"

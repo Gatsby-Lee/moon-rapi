@@ -1,0 +1,17 @@
+# --
+# Function based Role
+# ref: https://docs.ansible.com/ansible/latest/tips_tricks/sample_setup.html#sample-task-and-handler-files-in-a-function-based-role
+#
+# --
+
+- name: Print a message
+  ansible.builtin.debug:
+    msg: ">>>>>>>>>> START: Installing PostgreSQL"
+
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html
+- name: Include Tasks - Install PostgreSQL
+  ansible.builtin.include_tasks: "install-postgresql-on-{{ normalized_ansible_distribution }}-{{ normalized_ansible_distribution_release }}.yaml"
+
+- name: Print a message
+  ansible.builtin.debug:
+    msg: "<<<<<<<<<< END: Installing PostgreSQL"
