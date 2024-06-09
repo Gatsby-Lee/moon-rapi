@@ -41,4 +41,4 @@ Create a table / Insert a record / Query to the table
 
     python3 -m venv .venv
     source .venv/bin/activate
-    pip install "psycopg"
+    pip install "psycopg[binary,pool]"
