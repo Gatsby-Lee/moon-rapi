@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: exp-pg-user
+      POSTGRES_PASSWORD: yobro
+      POSTGRES_DB: exp_pg
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
