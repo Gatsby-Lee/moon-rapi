@@ -23,3 +23,10 @@ services:
     ports:
       - "80:80"
       - "443:443"
+
+networks:
+  custom_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
