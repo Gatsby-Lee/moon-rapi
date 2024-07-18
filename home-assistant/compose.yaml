@@ -7,6 +7,12 @@ services:
     volumes:
       - ./config:/config
       - /etc/localtime:/etc/localtime:ro
+      # @note: # The dbus volume is essential to make bluetooth work
+      - /run/dbus:/run/dbus:ro # Essential!!
+    # Setting privileged to true gives the container full access to all host devices including USB
+    # This is convenient but may not be ideal
+    # https://robertjandegroot.wordpress.com/2021/01/03/adding-usb-devices-to-your-containers/
+    privileged: true
     environment:
       - TZ=America/Los_Angeles
     restart: unless-stopped
