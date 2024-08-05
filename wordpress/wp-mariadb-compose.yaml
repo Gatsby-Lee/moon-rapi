@@ -1,0 +1,64 @@
+# ref: https://docs.docker.com/compose/compose-file/
+services:
+  wordpress:
+    # https://hub.docker.com/_/wordpress
+    image: wordpress:6
+    container_name: wordpress_app
+    depends_on:
+      # https://github.com/peter-evans/docker-compose-healthcheck
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:80"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    volumes:
+      - type: bind
+        source: ${WP_DATA_PATH:-.}/wp_data
+        target: /var/www/html
+        read_only: false
+        bind:
+          create_host_path: true # if the `wp_data` doesn't exist, it will be created
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost || exit 1"]
+      start_period: 5s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  db:
+    image: mariadb:11.4
+    container_name: db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-ohmaria}
+      # optional
+      MYSQL_PASSWORD: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_DATABASE: wordpress
+    # ref: https://docs.docker.com/compose/compose-file/05-services/#volumes
+    volumes:
+      - type: bind
+        source: ${MYSQL_DATA_PATH:-.}/mdb_data
+        target: /var/lib/mysql
+        read_only: false
+        bind:
+          create_host_path: true # if the `mdb_data` doesn't exist, it will be created
+      - type: bind
+        source: ${MYSQL_DATA_PATH:-.}/mdb_logs
+        target: /var/log/mysql
+        read_only: false
+        bind:
+          create_host_path: true # if the `mdb_logs` doesn't exist, it will be created
+    # ref: https://mariadb.org/mariadb-server-docker-official-images-healthcheck-without-mysqladmin/
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 5s
+      interval: 10s
+      timeout: 5s
+      retries: 5
